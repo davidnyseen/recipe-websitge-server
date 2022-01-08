@@ -14,9 +14,9 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.post('/', (req, res) => {
-    console.log(req.body);
+    console.log(req.body.value);
     fetch(
-        'https://api.edamam.com/search?app_id=c08ba36f&app_key=2e5c98200b0dd0211ff9f285f249efb6&q=pizza'
+        `https://api.edamam.com/search?app_id=c08ba36f&app_key=2e5c98200b0dd0211ff9f285f249efb6&q=${req.body.value}`
     )
         .then((response) => response.json())
         .then((data) => {
