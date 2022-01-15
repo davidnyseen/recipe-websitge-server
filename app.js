@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const { requireAuth, checkUser } = require('./middleware/authMiddleware');
 const fetch = require('node-fetch');
 const cors = require('cors');
-
+const secret = require('./')
 const corsOptions = {
     origin: '*',
     credentials: true, //access-control-allow-credentials:true
@@ -42,9 +42,9 @@ app.post('/', (req, res) => {
       res.status(400).send('error')
   }
 });
-
 // database connection
 const dbURI = 'mongodb+srv://david:alisacara1@cluster0.fddex.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
   .then((result) => app.listen(5000))
   .catch((err) => console.log(err));
