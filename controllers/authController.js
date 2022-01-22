@@ -42,12 +42,12 @@ const createToken = (id) => {
 module.exports.signup_post = async (req, res) => {
   email = req.body.emailRes;
   password = req.body.passwordRes;
-// console.log(req.body.emailRes)
+  let name = req.body.name;
   try {
-    const user = await User.create({ email, password });
+    const user = await User.create({ email, password, name });
     const token = createToken(user._id);
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(201).json({ user: user._id });
+    res.status(201).json({ user: user.name });
   }
   catch(err) {
     const errors = handleErrors(err);
@@ -57,13 +57,13 @@ module.exports.signup_post = async (req, res) => {
 }
 
 module.exports.login_post = async (req, res) => {
-  const { email, password } = req.body;
-
+  email = req.body.emailRes;
+  password = req.body.passwordRes;
   try {
     const user = await User.login(email, password);
     const token = createToken(user._id);
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(200).json({ user: user._id });
+    res.status(200).json({ user: user.name });
   } 
   catch (err) {
     const errors = handleErrors(err);
@@ -71,10 +71,30 @@ module.exports.login_post = async (req, res) => {
   }
 
 }
+module.exports.protctedroute_get = (req, res) => {
+    const token = req.cookies.jwt;
 
+  // check json web token exists & is verified
+  if (token) {
+    jwt.verify(token, 'david nyssen secret', (err, decodedToken) => {
+      if (err) {
+        console.log('protctedroute_get err ')
+        res.json(false).status(400);
+      } else {
+        console.log('protctedroute_get true ')
+        res.json(true).status(201);
+      }
+    });
+  } else {
+    console.log('protctedroute_get no token ')
+    res.json(false);
+  
+};
+
+}
 module.exports.logout_get = (req, res) => {
   res.cookie('jwt', '', { maxAge: 1 });
-  res.redirect('/');
+  res.status(200).json(true);
 }
 
 // there are a few types of requst from clients,

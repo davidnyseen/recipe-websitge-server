@@ -26,7 +26,7 @@ app.use(express.json());
 let app_id = 'c08ba36f';
 let app_key = '2e5c98200b0dd0211ff9f285f249efb6';
 app.post('/', (req, res) => {
-    console.log(req.body.value);
+    // console.log(req.body.value);
   try {
     fetch(
         `https://api.edamam.com/api/recipes/v2?type=public&q=${req.body.value}&app_id=c08ba36f&app_key=2e5c98200b0dd0211ff9f285f249efb6`
@@ -52,5 +52,5 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCr
 // routes
 // app.get('*', checkUser);
 // app.get('/', (req, res) => res.render('home'));
-// app.get('/smoothies', requireAuth, (req, res) => res.render('smoothies'));
+// app.get('/protectedroute', requireAuth);
 app.use(authRoutes);
