@@ -7,8 +7,8 @@ const fetch = require('node-fetch');
 const cors = require('cors');
 const secret = require('./')
 const corsOptions = {
-    origin: '*',
-    credentials: true, //access-control-allow-credentials:true
+    origin: true,
+    credentials:  true,
     optionSuccessStatus: 200,
 };
 
@@ -22,6 +22,7 @@ app.use(cookieParser());
 // view engine
 
 app.use(cors(corsOptions));
+// app.use(cors());
 app.use(express.json());
 let app_id = 'c08ba36f';
 let app_key = '2e5c98200b0dd0211ff9f285f249efb6';

@@ -38,7 +38,7 @@ const createToken = (id) => {
     expiresIn: maxAge
   });
 };
-
+// post to signup
 module.exports.signup_post = async (req, res) => {
   email = req.body.emailRes;
   password = req.body.passwordRes;
@@ -47,13 +47,14 @@ module.exports.signup_post = async (req, res) => {
     const user = await User.create({ email, password, name });
     const token = createToken(user._id);
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
+    res.header('Access-Control-Allow-Credentials','true')
     res.status(201).json({ user: user.name });
   }
   catch(err) {
     const errors = handleErrors(err);
     res.status(400).json({ errors });
   }
- 
 }
 
 module.exports.login_post = async (req, res) => {
@@ -62,7 +63,7 @@ module.exports.login_post = async (req, res) => {
   try {
     const user = await User.login(email, password);
     const token = createToken(user._id);
-    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000, path:"/" });
     res.status(200).json({ user: user.name });
   } 
   catch (err) {
