@@ -74,7 +74,7 @@ module.exports.login_post = async (req, res) => {
 }
 module.exports.protctedroute_get = (req, res) => {
     const token = req.cookies.jwt;
-
+console.log(req.cookies)
   // check json web token exists & is verified
   if (token) {
     jwt.verify(token, 'david nyssen secret', (err, decodedToken) => {

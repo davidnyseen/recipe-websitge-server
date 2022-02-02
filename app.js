@@ -6,6 +6,8 @@ const { requireAuth, checkUser } = require('./middleware/authMiddleware');
 const fetch = require('node-fetch');
 const cors = require('cors');
 const secret = require('./')
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
 const corsOptions = {
     origin: true,
     credentials:  true,
@@ -39,7 +41,7 @@ app.post('/', (req, res) => {
         });
   }
   catch(err){
-      console.log(err);
+      // console.log(err);
       res.status(400).send('error')
   }
 });
