@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 
 // handle errors
 const handleErrors = (err) => {
-  console.log(err.message, err.code);
   let errors = { email: '', password: '' };
   // incorrect email
   if (err.message === 'incorrect email') {
@@ -74,20 +73,16 @@ module.exports.login_post = async (req, res) => {
 }
 module.exports.protctedroute_get = (req, res) => {
     const token = req.cookies.jwt;
-console.log(req.cookies)
   // check json web token exists & is verified
   if (token) {
     jwt.verify(token, 'david nyssen secret', (err, decodedToken) => {
       if (err) {
-        console.log('protctedroute_get err ')
         res.json(false).status(400);
       } else {
-        console.log('protctedroute_get true ')
         res.json(true).status(201);
       }
     });
   } else {
-    console.log('protctedroute_get no token ')
     res.json(false);
   
 };

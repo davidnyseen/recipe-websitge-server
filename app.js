@@ -7,7 +7,7 @@ const fetch = require('node-fetch');
 const cors = require('cors');
 const secret = require('./')
 const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
+const upload = multer({ dest: 'images/' })
 const corsOptions = {
     origin: true,
     credentials:  true,

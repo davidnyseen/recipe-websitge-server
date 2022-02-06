@@ -11,7 +11,6 @@ const requireAuth = (req, res) => {
         console.log(err.message);
         res.json(false).status(400);
       } else {
-        console.log(decodedToken);
         res.json(true).status(201);
       }
     });
