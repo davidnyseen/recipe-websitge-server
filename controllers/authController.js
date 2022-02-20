@@ -83,7 +83,7 @@ module.exports.protctedroute_get = (req, res) => {
       }
     });
   } else {
-    res.json(false);
+    res.json(false).status(400);
   
 };
 

@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const { requireAuth, checkUser } = require('./middleware/authMiddleware');
 const fetch = require('node-fetch');
 const cors = require('cors');
-const secret = require('./')
+const secret = require('./secret')
 const multer  = require('multer')
 const upload = multer({ dest: 'images/' })
 const corsOptions = {
@@ -13,7 +13,6 @@ const corsOptions = {
     credentials:  true,
     optionSuccessStatus: 200,
 };
-
 const app = express();
 
 // middleware
