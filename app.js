@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const authRoutes = require('./routes/authRoutes');
+const Routes = require('./routes/routes');
 const cookieParser = require('cookie-parser');
 const { requireAuth, checkUser } = require('./middleware/authMiddleware');
 const fetch = require('node-fetch');
@@ -51,8 +51,4 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCr
   .then((result) => app.listen(5000))
   .catch((err) => console.log(err));
 
-// routes
-// app.get('*', checkUser);
-// app.get('/', (req, res) => res.render('home'));
-// app.get('/protectedroute', requireAuth);
-app.use(authRoutes);
+app.use(Routes);

@@ -11,13 +11,13 @@ const { uploadFile, getFileStream } = require('../s3')
 
 const app = express()
 
-app.get('/images/:key', (req, res) => {
+module.exports.getImage_get = (req, res) => {
   console.log(req.params)
   const key = req.params.key
   const readStream = getFileStream(key)
 
-  readStream.pipe(res)
-})
+  readStream.pipe(res);
+}
 
 module.exports.submitNewImage_post = async (req, res) => {
   const file = req.file
@@ -30,6 +30,6 @@ module.exports.submitNewImage_post = async (req, res) => {
   await unlinkFile(file.path)
   console.log(result)
   const description = req.body.description
-  res.send({imagePath: `/images/${result.Key}`})
+  res.send({imagePath: `/getImage/${result.Key}`}).status(201);
 }
-
+// every time we post a image we return a link to the image on aws
