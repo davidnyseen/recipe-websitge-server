@@ -21,15 +21,15 @@ module.exports.getImage_get = (req, res) => {
 
 module.exports.submitNewImage_post = async (req, res) => {
   const file = req.file
-  console.log(file)
+  // console.log(file)
 
   // apply filter  
   // resize 
 
   const result = await uploadFile(file)
   await unlinkFile(file.path)
-  console.log(result)
+  // console.log(result)
   const description = req.body.description
-  res.send({imagePath: `/getImage/${result.Key}`}).status(201);
+  res.send({imagePath: `http://localhost:5000/getImage/${result.Key}`}).status(201);
 }
 // every time we post a image we return a link to the image on aws

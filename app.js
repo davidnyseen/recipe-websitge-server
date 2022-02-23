@@ -33,7 +33,6 @@ app.post('/', (req, res) => {
     fetch(
         `https://api.edamam.com/api/recipes/v2?type=public&q=${req.body.value}&app_id=c08ba36f&app_key=2e5c98200b0dd0211ff9f285f249efb6`
     )
-    
         .then((response) => response.json())
         .then((data) => {
             res.send(data).status(201);
@@ -44,6 +43,12 @@ app.post('/', (req, res) => {
       res.status(400).send('error')
   }
 });
+// app.post('/test',(req, res) => {
+//   const a = req.body.info;
+//   console.log(a);
+//   console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+//   res.send(req.body.info).status(201);
+// })
 // database connection
 const dbURI = 'mongodb+srv://david:alisacara1@cluster0.fddex.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 
