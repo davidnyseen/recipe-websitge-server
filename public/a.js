@@ -40,17 +40,16 @@ const createToken = (id) => {
 module.exports.signup_post = async (req, res) => {
   email = req.body.emailRes;
   password = req.body.passwordRes;
-  console.log(email, " ", password);
   let name = req.body.name;
   try {
     const user = await User.create({ email, password, name });
     const token = createToken(user._id);
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
     res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
-    res.header('Access-Control-Allow-Credentials','true')
+    res.header('Access-Control-Allow-Credentials', 'true')
     res.status(201).json({ user: user.name });
   }
-  catch(err) {
+  catch (err) {
     const errors = handleErrors(err);
     res.status(400).json({ errors });
   }
@@ -59,14 +58,12 @@ module.exports.signup_post = async (req, res) => {
 module.exports.login_post = async (req, res) => {
   email = req.body.emailRes;
   password = req.body.passwordRes;
-  console.log('in login ');
-  console.log(email, " ", password);
   try {
     const user = await User.login(email, password);
     const token = createToken(user._id);
-    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000, path:"/" });
+    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000, path: "/" });
     res.status(200).json({ user: user.name });
-  } 
+  }
   catch (err) {
     const errors = handleErrors(err);
     res.status(400).json({ errors });
@@ -74,20 +71,27 @@ module.exports.login_post = async (req, res) => {
 
 }
 module.exports.protctedroute_get = (req, res) => {
-    const token = req.cookies.jwt;
-  // check json web token exists & is verified
+  const loggedStatus = checkProtectedRoute(req, res);
+  if (loggedStatus) {
+    res.json(true).status(201);
+  }
+  else {
+    res.json(false).status(400);
+  }
+}
+module.exports.checkProtectedRoute = (req, res) => {
+  const token = req.cookies.jwt;
   if (token) {
     jwt.verify(token, 'david nyssen secret', (err, decodedToken) => {
       if (err) {
-        res.json(false).status(400);
+        return false;
       } else {
-        res.json(true).status(201);
+        return true;
       }
     });
   } else {
-    res.json(false).status(400);
-};
-
+    return false;
+  };
 }
 module.exports.logout_get = (req, res) => {
   res.cookie('jwt', '', { maxAge: 1 });

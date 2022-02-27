@@ -43,6 +43,7 @@ app.post('/', (req, res) => {
       res.status(400).send('error')
   }
 });
+// console.log(secret.secrets.dbURI)
 // app.post('/test',(req, res) => {
 //   const a = req.body.info;
 //   console.log(a);
@@ -50,9 +51,9 @@ app.post('/', (req, res) => {
 //   res.send(req.body.info).status(201);
 // })
 // database connection
-const dbURI = 'mongodb+srv://david:alisacara1@cluster0.fddex.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+// const dbURI = 'mongodb+srv://david:alisacara1@cluster0.fddex.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
+mongoose.connect(secret.secrets.dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
   .then((result) => app.listen(5000))
   .catch((err) => console.log(err));
 

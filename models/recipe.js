@@ -23,10 +23,11 @@ const recipeSchema = new mongoose.Schema({
      imgUrl:{
         type: String,
         required: [true, 'error getting image']   
-     },     directions:{
+     },    
+      directions:{
         type: String,
         required: [true, 'Please enter directions'],
-        minlength: [6, 'Minimum recipe name length is 6 characters'],
+        minlength: [6, 'Minimum recipe description length is 6 characters'],
      }
 })
 const Recipes = mongoose.model('recipes', recipeSchema);
