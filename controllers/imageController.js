@@ -1,4 +1,6 @@
 const express = require('express')
+const jwt = require('jsonwebtoken');
+var im = require('imagemagick');
 
 const fs = require('fs')
 const util = require('util')
@@ -18,11 +20,19 @@ module.exports.getImage_get = (req, res) => {
 
   readStream.pipe(res);
 }
+const convert = (file) => {
+
+  im.convert([file.originalname, '-resize', '300x300'], 
+  function(err, stdout){
+    if (err) throw err;
+    console.log('stdout:', stdout);
+  });
+}
 
 module.exports.submitNewImage_post = async (req, res) => {
   const file = req.file
-  // console.log(file)
-
+  console.log(file)
+  // convert(file);
   // apply filter  
   // resize 
 

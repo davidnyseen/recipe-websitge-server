@@ -59,8 +59,7 @@ module.exports.signup_post = async (req, res) => {
 module.exports.login_post = async (req, res) => {
   email = req.body.emailRes;
   password = req.body.passwordRes;
-  console.log('in login ');
-  console.log(email, " ", password);
+
   try {
     const user = await User.login(email, password);
     const token = createToken(user._id);
@@ -81,6 +80,7 @@ module.exports.protctedroute_get = (req, res) => {
       if (err) {
         res.json(false).status(400);
       } else {
+        console.log("confirmed login");
         res.json(true).status(201);
       }
     });

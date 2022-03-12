@@ -23,7 +23,11 @@ const recipeSchema = new mongoose.Schema({
      imgUrl:{
         type: String,
         required: [true, 'error getting image']   
-     },    
+     },  
+     userID:{
+        type: String,
+        required: [true, 'error getting userId']  
+    },  
       directions:{
         type: String,
         required: [true, 'Please enter directions'],

@@ -2,6 +2,8 @@ const { Router } = require('express');
 const authController = require('../controllers/authController');
 const dataController = require('../controllers/dataController')
 const imageController = require('../controllers/imageController')
+const accountController = require('../controllers/accountController');
+
 const router = Router();
 const multer  = require('multer')
 const upload = multer({ dest : 'images' })
@@ -12,5 +14,7 @@ router.get('/logout', authController.logout_get);
 router.get('/protctedroute', authController.protctedroute_get);
 router.post('/submitNewRecipe', dataController.submitNewRecipe_post)
 router.post('/submitNewImage', upload.single('image'), imageController.submitNewImage_post)
-router.get('/getImage/:key', imageController.getImage_get)
+router.get('/getImage/:key', imageController.getImage_get);
+router.get('/myAccount', accountController.myRecipes_get);
+
 module.exports = router;
