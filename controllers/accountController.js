@@ -21,6 +21,6 @@ module.exports.myRecipes_get = async (req, res) => {
 
     };
     let recipes = await Recipes.find({userID : userID})
-    console.log(recipes)
+    // console.log(recipes)
     res.status(201).json(recipes);
 }

@@ -11,8 +11,6 @@ const upload = multer({ dest: 'uploads/' })
 
 const { uploadFile, getFileStream } = require('../s3')
 
-const app = express()
-
 module.exports.getImage_get = (req, res) => {
   console.log(req.params)
   const key = req.params.key
@@ -20,17 +18,21 @@ module.exports.getImage_get = (req, res) => {
 
   readStream.pipe(res);
 }
-const convert = (file) => {
 
-  im.convert([file.originalname, '-resize', '300x300'], 
-  function(err, stdout){
-    if (err) throw err;
-    console.log('stdout:', stdout);
+const convert = (file) => {
+  im.resize({
+    srcPath: file,
+    dstPath: 'kittens-small.jpg',
+    width:   256
+  }, function(err, stdout, stderr){
+    if (err) console.log(err);;
   });
+    console.log('resized kittens.jpg to fit within 256x256px');
 }
 
 module.exports.submitNewImage_post = async (req, res) => {
-  const file = req.file
+  const file = req.file;
+  // convert(file.originalname);
   console.log(file)
   // convert(file);
   // apply filter  
