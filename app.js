@@ -27,8 +27,9 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 // app.use(cors());
 app.use(express.json());
-let app_id = 'c08ba36f';
-let app_key = '2e5c98200b0dd0211ff9f285f249efb6';
+// let app_id = 'c08ba36f';
+// let app_key = '2e5c98200b0dd0211ff9f285f249efb6';
+
 const findRecipe = async (serchVal) => {
   return await Recipes.find({ recipename: /pizza/ }, (err, data) => {
     if (err) {
@@ -39,30 +40,6 @@ const findRecipe = async (serchVal) => {
   });
 }
 
-app.post('/',  (req, res) => {
-  let api = [];
-  const serchVal = req.body.value;
-  try {
-    fetch(
-      `https://api.edamam.com/api/recipes/v2?type=public&q=${serchVal}&app_id=c08ba36f&app_key=2e5c98200b0dd0211ff9f285f249efb6`
-    )
-      .then((response) => response.json())
-      .then (async (data) => {
-        api = data;
-        let recipesDb = [];
-        recipesDb = await findRecipe(serchVal);
-        console.log(recipesDb);
-        // console.log(api);
-// console.log(api.concat(recipesDb));
-        
-        res.send({api, recipesDb}).status(201);
-      });
-  }
-  catch (err) {
-    // console.log(err);
-    res.status(400).send('error')
-  }
-});
 
 mongoose.connect('mongodb+srv://david:alisacara1@cluster0.fddex.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
   .then((result) => app.listen(5000))

@@ -1,6 +1,7 @@
 const express = require('express')
 const jwt = require('jsonwebtoken');
 var im = require('imagemagick');
+const sharp = require('sharp');
 
 const fs = require('fs')
 const util = require('util')
@@ -10,6 +11,7 @@ const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 
 const { uploadFile, getFileStream } = require('../s3')
+let outputImage = 'resized-image.jpg';
 
 module.exports.getImage_get = (req, res) => {
   console.log(req.params)
@@ -20,20 +22,21 @@ module.exports.getImage_get = (req, res) => {
 }
 
 const convert = (file) => {
-  im.resize({
-    srcPath: file,
-    dstPath: 'kittens-small.jpg',
-    width:   256
-  }, function(err, stdout, stderr){
-    if (err) console.log(err);;
-  });
-    console.log('resized kittens.jpg to fit within 256x256px');
+// file name of the resized image
+console.log(file);
+sharp(file).resize({height:300,width:300}).toFile(outputImage)
+.then(function(newFileInfo){
+	console.log("Image resized");
+})
+.catch(function(err){
+	console.log("Got Error resing image");
+})
 }
 
 module.exports.submitNewImage_post = async (req, res) => {
-  const file = req.file;
+  try{const file = req.file;
   // convert(file.originalname);
-  console.log(file)
+  // console.log(file)
   // convert(file);
   // apply filter  
   // resize 
@@ -43,5 +46,10 @@ module.exports.submitNewImage_post = async (req, res) => {
   // console.log(result)
   const description = req.body.description
   res.send({imagePath: `http://localhost:5000/getImage/${result.Key}`}).status(201);
+}
+  catch(err){
+console.log(err);
+  }
+  
 }
 // every time we post a image we return a link to the image on aws

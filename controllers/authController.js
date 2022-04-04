@@ -80,7 +80,7 @@ module.exports.protctedroute_get = (req, res) => {
       if (err) {
         res.json(false).status(400);
       } else {
-        console.log("confirmed login");
+        // console.log("confirmed login");
         res.json(true).status(201);
       }
     });

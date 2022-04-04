@@ -20,7 +20,15 @@ module.exports.myRecipes_get = async (req, res) => {
         res.json(false).status(400);
 
     };
-    let recipes = await Recipes.find({userID : userID})
+    let recipes = await Recipes.find({userID : userID}, function(err, docs){
+        if(err){
+            console.log(err);
+        }
+        else{
+            // console.log("in myRecipes_get we got users recipes");
+            // console.log(docs);
+        }
+    })
     // console.log(recipes)
     res.status(201).json(recipes);
 }
