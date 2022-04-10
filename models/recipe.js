@@ -32,6 +32,10 @@ const recipeSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please enter directions'],
         minlength: [6, 'Minimum recipe description length is 6 characters'],
+     },
+     ratingAverage:{
+         type: Number,
+         default: 0,
      }
 })
 const Recipes = mongoose.model('recipes', recipeSchema);

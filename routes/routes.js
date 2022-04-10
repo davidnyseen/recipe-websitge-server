@@ -18,5 +18,7 @@ router.post('/submitNewRecipe', dataController.submitNewRecipe_post)
 router.post('/submitNewImage', upload.single('image'), imageController.submitNewImage_post)
 router.get('/getImage/:key', imageController.getImage_get);
 router.get('/myAccount', accountController.myRecipes_get);
+router.post('/submitRating', dataController.submitRating);
+
 
 module.exports = router;
