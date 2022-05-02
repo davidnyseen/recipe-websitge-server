@@ -40,7 +40,7 @@ module.exports.submitNewRecipe_post = async (req, res) => {
   }
 }
 
-module.exports.submitRating = async (req, res) => {
+/*module.exports.submitRating = async (req, res) => {
   let userID = '';
   console.log("in submit rating");
   // auth func should be called
@@ -95,4 +95,44 @@ module.exports.submitRating = async (req, res) => {
   })
 
 
+}*/
+
+
+module.exports.submitRating = async (req, res) => {
+
+    // auth func should be called
+    /*const token = req.cookies.jwt;
+    if (token) {
+      jwt.verify(token, 'david nyssen secret', (err, decodedToken) => {
+        if (err) {
+          res.json(false).status(400);
+        } else {
+          userID = decodedToken.id;
+        }
+      });
+    } else {
+      res.json(false).status(400);
+    };*/
+  
+    //end of auth
+
+  Recipes.findOne({_id: req.body.curr_ID}, function(err, found) {
+    if(!err) {
+      console.log("FOUND");
+      found.ratingAverage = req.body.m_rate;
+      console.log(req.body.m_rate);
+      found.save(function(err, updateObject) {
+        if(err) {
+          console.log(err);
+          res.status(500).send();
+        } else {
+          console.log(updateObject);
+          res.send(updateObject);
+        }
+      })
+    }
+    else {
+      console.log("BRUH");
+    }
+  })
 }

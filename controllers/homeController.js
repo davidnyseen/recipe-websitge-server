@@ -2,10 +2,11 @@ const Recipes = require('./../models/recipe');
 const fetch = require('node-fetch');
 
 const findRecipe = async (serchVal) => {
-    return await Recipes.find({ recipename: /pizza/ }, (err, data) => {
+    return await Recipes.find({ recipename: {"$regex": serchVal} }, (err, data) => {
       if (err) {
         console.log(err);
       } else {
+        console.log(data);
         return data;
       }
     });
