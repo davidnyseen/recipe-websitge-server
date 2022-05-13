@@ -4,6 +4,7 @@ const dataController = require('../controllers/dataController')
 const imageController = require('../controllers/imageController')
 const accountController = require('../controllers/accountController');
 const homeController = require('../controllers/homeController');
+const categoryController = require('../controllers/categoryController');
 
 const router = Router();
 const multer  = require('multer')
@@ -19,6 +20,7 @@ router.post('/submitNewImage', upload.single('image'), imageController.submitNew
 router.get('/getImage/:key', imageController.getImage_get);
 router.get('/myAccount', accountController.myRecipes_get);
 router.post('/submitRating', dataController.submitRating);
+router.post('/getCategory', categoryController.getrecipe_category);
 
 
 module.exports = router;

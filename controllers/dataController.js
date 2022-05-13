@@ -40,68 +40,10 @@ module.exports.submitNewRecipe_post = async (req, res) => {
   }
 }
 
-/*module.exports.submitRating = async (req, res) => {
-  let userID = '';
-  console.log("in submit rating");
-  // auth func should be called
-  const token = req.cookies.jwt;
-  if (token) {
-    jwt.verify(token, 'david nyssen secret', (err, decodedToken) => {
-      if (err) {
-        res.json(false).status(400);
-      } else {
-        userID = decodedToken.id;
-      }
-    });
-  } else {
-    res.json(false).status(400);
-  };
-
-  //end of auth
-
-  console.log("AFTER AUTH");
-
-  let currentRate = req.body.rate;
-
-  var id = req.body.curr_ID;
-  console.log("THE ID IS: " + id);
-
-  Recipes.findOne({_id: id}, function(err, foundRecipe) {
-    if(err) {
-      console.log(err);
-      res.status(500).send();
-    }
-    else {
-      console.log("EVERYTHING IS ALRIGHT UNTIL HERE");
-      if(!foundRecipe) {
-        res.status(404).send();
-      }
-      else {
-        console.log("RECIPE FOUND");
-        foundRecipe.ratingAverage = req.body.rate;
-
-        foundRecipe.save(function(err, updateObject) {
-          if(err) {
-            console.log(err);
-            res.status(500).send();
-          } else {
-            console.log(updateObject);
-            console.log(res);
-            res.send(updateObject);
-          }
-        })
-      }
-    }
-  })
-
-
-}*/
-
-
 module.exports.submitRating = async (req, res) => {
 
     // auth func should be called
-    /*const token = req.cookies.jwt;
+    const token = req.cookies.jwt;
     if (token) {
       jwt.verify(token, 'david nyssen secret', (err, decodedToken) => {
         if (err) {
@@ -112,15 +54,59 @@ module.exports.submitRating = async (req, res) => {
       });
     } else {
       res.json(false).status(400);
-    };*/
+    };
   
     //end of auth
 
   Recipes.findOne({_id: req.body.curr_ID}, function(err, found) {
     if(!err) {
       console.log("FOUND");
-      found.ratingAverage = req.body.m_rate;
-      console.log(req.body.m_rate);
+      /*found.allratings.push(req.body.userRating);
+      found.save(function(err, updateObject) {
+        if(err) {
+          console.log(err);
+          res.status(500).send();
+        } else {
+          console.log(updateObject);
+          res.send(updateObject);
+        }
+      })*/
+      console.log(req.body.userRating);
+      console.log(found.allRatings.length);
+      if(found.allRatings.length >= 1)
+      {
+        for (let i = 0; i<found.allRatings.length; i++)
+        {
+          console.log("in loop");
+          if(found.allRatings[i].id == req.body.userRating.id)
+          {
+            console.log("Already saved");
+            /*found.ratingAverage = 0;
+            found.allRatings = [];
+            found.numberOfRatings = 0;*/
+            break;
+          }
+          if(i == found.allRatings.length-1)
+          {
+            found.numberOfRatings +=1;
+            //found.ratingAverage = req.body.userRating.rate;
+            found.ratingAverage = (found.ratingAverage + req.body.userRating.rate) / found.numberOfRatings;
+            found.allRatings.push(req.body.userRating);//FOR RATING LIST
+            /*found.ratingAverage = 0;
+            found.allRatings = [];*/
+            break;
+          }
+         // console.log(found.allRatings[i]);
+        }
+      }
+      else
+      {
+        found.numberOfRatings += 1;
+        found.ratingAverage = req.body.userRating.rate;
+        found.allRatings.push(req.body.userRating);
+        /*found.ratingAverage = 0;
+        found.allRatings = [];*/
+      }
       found.save(function(err, updateObject) {
         if(err) {
           console.log(err);
@@ -130,6 +116,8 @@ module.exports.submitRating = async (req, res) => {
           res.send(updateObject);
         }
       })
+
+      
     }
     else {
       console.log("BRUH");

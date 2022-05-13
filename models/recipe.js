@@ -40,6 +40,9 @@ const recipeSchema = new mongoose.Schema({
      numberOfRatings:{
          type: Number,
          default: 0,
+     },
+     allRatings:{
+         type: [],
      }
 })
 const Recipes = mongoose.model('recipes', recipeSchema);
