@@ -20,6 +20,10 @@ const recipeSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please enter mealType']   
      },
+    cuisineType:{
+        type: String,
+        required: [true, 'Please enter cuisineType']  
+    },
      imgUrl:{
         type: String,
         required: [true, 'error getting image']   
@@ -28,6 +32,10 @@ const recipeSchema = new mongoose.Schema({
         type: String,
         required: [true, 'error getting userId']  
     },  
+    author:{
+        type: String,
+        required: [true, 'error getting userName']
+    },
       directions:{
         type: String,
         required: [true, 'Please enter directions'],

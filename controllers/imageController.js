@@ -1,4 +1,3 @@
-const express = require('express')
 const jwt = require('jsonwebtoken');
 var im = require('imagemagick');
 const sharp = require('sharp');
@@ -14,7 +13,6 @@ const { uploadFile, getFileStream } = require('../s3')
 let outputImage = 'resized-image.jpg';
 
 module.exports.getImage_get = (req, res) => {
-  console.log(req.params)
   const key = req.params.key
   const readStream = getFileStream(key)
 
@@ -23,10 +21,8 @@ module.exports.getImage_get = (req, res) => {
 
 const convert = (file) => {
 // file name of the resized image
-console.log(file);
 sharp(file).resize({height:300,width:300}).toFile(outputImage)
 .then(function(newFileInfo){
-	console.log("Image resized");
 })
 .catch(function(err){
 	console.log("Got Error resing image");

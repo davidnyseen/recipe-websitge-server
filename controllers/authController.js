@@ -40,7 +40,7 @@ const createToken = (id) => {
 module.exports.signup_post = async (req, res) => {
   email = req.body.emailRes;
   password = req.body.passwordRes;
-  console.log(email, " ", password);
+  // console.log(email, " ", password);
   let name = req.body.name;
   try {
     const user = await User.create({ email, password, name });
@@ -65,7 +65,7 @@ module.exports.login_post = async (req, res) => {
     console.log(user);
     const token = createToken(user._id);
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000, path:"/" });
-    res.status(200).json({ user: user.name, id: user._id });
+    res.status(200).json({ user: user.name });
   } 
   catch (err) {
     const errors = handleErrors(err);
@@ -86,6 +86,7 @@ module.exports.protctedroute_get = (req, res) => {
       }
     });
   } else {
+    // console.log("token is "+ token);
     res.json(false).status(400);
 };
 

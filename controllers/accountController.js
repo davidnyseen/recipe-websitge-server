@@ -1,34 +1,48 @@
 const User = require("../models/User");
-const Recipes = require('../models/recipe')
-const jwt = require('jsonwebtoken');
+const Recipes = require("../models/recipe");
+const jwt = require("jsonwebtoken");
 
-module.exports.myRecipes_get = async (req, res) => {
-    let userID = '';
-    // auth func should be called
-    const token = req.cookies.jwt;
-    if (token) {
-        jwt.verify(token, 'david nyssen secret', (err, decodedToken) => {
-            if (err) {
-                res.json(false).status(400);
-                console.log(err);
-            } else {
-                userID = decodedToken.id;
-            }
-        });
-    } else {
-        console.log('err');
-        res.json(false).status(400);
+module.exports.myUploads_get = async (req, res) => {
+  let userID;
+  if (req.admin) {
+    userID = req.admin;
+  } else {
+    console.log("err");
+    res.send("error findById").status(400);
+  }
+  let recipes = await Recipes.find({ userID: userID }, function (err, docs) {
+    if (err) {
+      console.log(err);
+    }
+  });
+  res.status(201).json(recipes);
+};
 
-    };
-    let recipes = await Recipes.find({userID : userID}, function(err, docs){
-        if(err){
-            console.log(err);
-        }
-        else{
-            // console.log("in myRecipes_get we got users recipes");
-            // console.log(docs);
+module.exports.savedRecipes_get = async (req, res) => {
+  let userID;
+  if (req.admin) {
+    userID = req.admin;
+  } else {
+    console.log("err");
+    res.send("error findById").status(400);
+  }
+  let user = await User.findById(userID, function (err, docs) {
+    if (err) {
+      console.log(err);
+      res.send("error findById").status(400);
+    }
+  });
+  let saved = user.likedRecipes;
+  let arr=[];
+  for(let i=0; i<saved.length; i++){
+    let recipe = await Recipes.findById(saved[i], function (err, docs) {
+        if (err) {
+          console.log(err);
+          res.send("error findById").status(400);
         }
     })
-    // console.log(recipes)
-    res.status(201).json(recipes);
-}
+    arr.push(recipe);
+  }
+//   console.log(arr);
+  res.status(201).json(arr);
+};

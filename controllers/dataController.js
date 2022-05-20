@@ -1,5 +1,6 @@
 const Recipes = require('../models/recipe')
 const jwt = require('jsonwebtoken');
+const Users = require('../models/User');
 
 module.exports.submitNewRecipe_post = async (req, res) => {
   let userID = '';
@@ -25,10 +26,15 @@ module.exports.submitNewRecipe_post = async (req, res) => {
   let directions = req.body.directions;
   let preparationtime = req.body.preprationtime;
   let imgUrl = req.body.imgUrl;
+  let cuisineType = req.body.cuisineType;
+  let author = req.body.login.user;
+
+  //Recipes.findOne({})
+
   try {
     const recipes = await Recipes.create({
-      recipename, ingredients, mealType, directions, preparationtime,
-      imgUrl, userID
+      recipename, ingredients, mealType, cuisineType, directions, preparationtime,
+      imgUrl, userID, author
     })
     res.status(201).json(true);
 
@@ -73,24 +79,27 @@ module.exports.submitRating = async (req, res) => {
       })*/
       console.log(req.body.userRating);
       console.log(found.allRatings.length);
+      let ratingSum = 0;
       if(found.allRatings.length >= 1)
       {
         for (let i = 0; i<found.allRatings.length; i++)
         {
+          ratingSum += found.allRatings[i].rate;
+
           console.log("in loop");
           if(found.allRatings[i].id == req.body.userRating.id)
           {
             console.log("Already saved");
-            /*found.ratingAverage = 0;
+            found.ratingAverage = 0;
             found.allRatings = [];
-            found.numberOfRatings = 0;*/
+            found.numberOfRatings = 0;
             break;
           }
           if(i == found.allRatings.length-1)
           {
             found.numberOfRatings +=1;
             //found.ratingAverage = req.body.userRating.rate;
-            found.ratingAverage = (found.ratingAverage + req.body.userRating.rate) / found.numberOfRatings;
+            found.ratingAverage = parseInt((ratingSum + req.body.userRating.rate) / found.numberOfRatings);
             found.allRatings.push(req.body.userRating);//FOR RATING LIST
             /*found.ratingAverage = 0;
             found.allRatings = [];*/
