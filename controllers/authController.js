@@ -65,7 +65,7 @@ module.exports.login_post = async (req, res) => {
     console.log(user);
     const token = createToken(user._id);
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000, path:"/" });
-    res.status(200).json({ user: user.name });
+    res.status(200).json({ user: user.name, id: user._id, recommendations: user.recommendationSet });
   } 
   catch (err) {
     const errors = handleErrors(err);

@@ -23,6 +23,14 @@ const userSchema = new mongoose.Schema({
   likedRecipes: {
     type: [String],
     unique: true,
+  },
+  recommendationSet: {
+    type: Boolean,
+    default: false,
+  },
+  usrPreferences: {
+    type: [],
+    unique: true,
   }
 });
 

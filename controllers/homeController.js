@@ -23,7 +23,14 @@ module.exports.getrecipe_post =  (req, res) => {
               api = data;
               let recipesDb = [];
               recipesDb = await findRecipe(serchVal);
-              
+
+              recipesDb = recipesDb.sort(function(a,b)//WE SORT THE ARRAY IN DECREASING ORDER OF RATING
+              {
+                if(a.ratingAverage < b.ratingAverage) return 1;
+                if(a.ratingAverage > b.ratingAverage) return -1;
+                return 0;
+              });
+                            
               res.send({api, recipesDb}).status(201);
               return;
             }).catch(err => {throw new Error(err)});

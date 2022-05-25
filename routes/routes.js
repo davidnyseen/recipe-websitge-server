@@ -6,6 +6,7 @@ const accountController = require("../controllers/accountController");
 const homeController = require("../controllers/homeController");
 const saveController = require("../controllers/saveController");
 const categoryController = require('../controllers/categoryController');
+const recommendedController = require('../controllers/recommendedController');
 const jwt = require("jsonwebtoken");
 
 const router = Router();
@@ -55,6 +56,10 @@ router.get("/myAccount/myUploads", auth, accountController.myUploads_get);
 router.get("/myAccount/savedRecipes",auth, accountController.savedRecipes_get);
 router.post("/submitRating", dataController.submitRating);
 router.post('/getCategory', categoryController.getrecipe_category);
+router.post('/setRecommendation', auth, dataController.setRecommendationForm);
+router.post('/getRecommended', auth, recommendedController.getRecommendedRecipes);
+router.post('/getFormStatus', auth, recommendedController.getFormStatus);
+
 
 
 module.exports = router;

@@ -41,7 +41,7 @@ const findRecipe = async (serchVal) => {
 }
 
 
-mongoose.connect('mongodb+srv://david:alisacara1@cluster0.fddex.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+mongoose.connect('mongodb+srv://david:alisacara1@cluster0.mggk8.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
   .then((result) => app.listen(5000))
   .catch((err) => console.log(err));
 
