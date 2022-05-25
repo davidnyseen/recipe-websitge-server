@@ -71,6 +71,11 @@ module.exports.getRecommendedRecipes = async (req, res) =>
                 i = parseInt(Math.random() * ((size - 3) - 1) + 1);
                 j = 3;
             }
+            else if(size == 3)
+            {
+                i=0;
+                j=3;
+            }
             else if(size == 2)
             {
                 i = 0;

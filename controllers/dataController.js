@@ -77,9 +77,9 @@ module.exports.submitRating = async (req, res) => {
           console.log("in loop");
           if (found.allRatings[i].id == req.body.userRating.id) {
             console.log("Already saved");
-            found.ratingAverage = 0;
+            /*found.ratingAverage = 0;
             found.allRatings = [];
-            found.numberOfRatings = 0;
+            found.numberOfRatings = 0;*/
             break;
           }
           if (i == found.allRatings.length - 1) {
