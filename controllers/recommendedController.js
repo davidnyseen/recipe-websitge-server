@@ -26,6 +26,7 @@ module.exports.getRecommendedRecipes = async (req, res) =>
     {
         if(!err)
         {
+            if(!found.usrPreferences[0].favCuisineType) return;
             console.log("SENDING BACK RECOMMENDATIONS");
             let favCuisine = found.usrPreferences[0].favCuisineType;
             console.log(favCuisine);
