@@ -51,6 +51,9 @@ router.post(
   upload.single("image"),
   imageController.submitNewImage_post
 );
+router.get('/', (req, res) => {
+  res.json({msg: 'hello'});
+})
 router.get("/getImage/:key", imageController.getImage_get);
 router.get("/myAccount/myUploads", auth, accountController.myUploads_get);
 router.get("/myAccount/savedRecipes",auth, accountController.savedRecipes_get);
