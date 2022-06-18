@@ -8,7 +8,8 @@ const cors = require('cors');
 const secret = require('./secret')
 const multer = require('multer')
 const upload = multer({ dest: 'images/' })
-const Recipes = require('./models/recipe')
+const Recipes = require('./models/recipe');
+const { EnvironmentCredentials } = require('aws-sdk');
 
 const corsOptions = {
   origin: true,
@@ -42,7 +43,7 @@ const findRecipe = async (serchVal) => {
 
 
 mongoose.connect('mongodb+srv://david:alisacara1@cluster0.mggk8.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
-  .then((result) => app.listen(5000))
+  .then((result) => app.listen(process.env.PORT || 5000))
   .catch((err) => console.log(err));
 
 app.use(Routes);
