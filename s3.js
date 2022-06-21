@@ -2,10 +2,11 @@ const fs = require('fs')
 const S3 = require('aws-sdk/clients/s3')
 const secret = require('./secret')
 
-const bucketName = (process.env.AWS_BUCKETNAME || secret.secrets.AWS_BUCKETNAME);
-const region = (process.env.AWS_REGION || secret.secrets.AWS_REGION);
-const accessKeyId = (process.env.AWS_ACCESS_CODE || secret.secrets.AWS_ACCESS_CODE);
-const secretAccessKey = (process.env.AWS_SECRET_ACCESS_CODE || secret.secrets.AWS_SECRET_ACCESS_CODE);
+// const bucketName = (process.env.AWS_BUCKETNAME || secret.secrets.AWS_BUCKETNAME);
+const bucketName = (process.env.AWS_BUCKETNAME);
+const region = (process.env.AWS_REGION);
+const accessKeyId = (process.env.AWS_ACCESS_CODE);
+const secretAccessKey = (process.env.AWS_SECRET_ACCESS_CODE);
 const s3 = new S3({
   region, 
   accessKeyId,
@@ -22,7 +23,7 @@ function uploadFile(file) {
     Body: fileStream,
     Key: file.filename
   }
-
+  console.log(uploadParams);
   return s3.upload(uploadParams).promise();
 }
 catch(err){
