@@ -7,7 +7,7 @@ const region = (process.env.AWS_REGION || secret.secrets.AWS_REGION);
 const accessKeyId = (process.env.AWS_ACCESS_CODE || secret.secrets.AWS_ACCESS_CODE);
 const secretAccessKey = (process.env.AWS_SECRET_ACCESS_CODE || secret.secrets.AWS_SECRET_ACCESS_CODE);
 const s3 = new S3({
-  region,
+  region, 
   accessKeyId,
   secretAccessKey
 })
