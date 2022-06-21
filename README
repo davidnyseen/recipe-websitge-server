@@ -1,0 +1,3 @@
+IN order to push the program to heroku go to the file where git exicts
+and type:
+git push heroku master

@@ -40,13 +40,13 @@ const createToken = (id) => {
 module.exports.signup_post = async (req, res) => {
   email = req.body.emailRes;
   password = req.body.passwordRes;
-  // console.log(email, " ", password);
   let name = req.body.name;
   try {
     const user = await User.create({ email, password, name });
     const token = createToken(user._id);
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
     res.header('Access-Control-Allow-Origin', process.env.WEBSITE_URL)
+    //res.header('Access-Control-Allow-Origin', 'https://localhost:3000')
     res.header('Access-Control-Allow-Credentials','true')
     res.status(201).json({ user: user.name });
   }
