@@ -3,7 +3,6 @@ const S3 = require('aws-sdk/clients/s3')
 const secret = require('./secret')
 
 // const bucketName = (process.env.AWS_BUCKETNAME || secret.secrets.AWS_BUCKETNAME);
-const bucketName = (process.env.AWS_BUCKETNAME);
 const region = (process.env.AWS_REGION);
 const accessKeyId = (process.env.AWS_ACCESS_CODE);
 const secretAccessKey = (process.env.AWS_SECRET_ACCESS_CODE);

@@ -4,5 +4,6 @@ exports.secrets = {
     'secret' : 'david nyssen secret',
     'AWS_REGION' : 'us-east-1', 
     'AWS_ACCESS_CODE' : 'AKIASSWOLEFGCU6UGBZS',
-    'AWS_SECRET_ACCESS_CODE' : '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'
+    'AWS_SECRET_ACCESS_CODE' : 'Wx4PWq5M8WZ+CG3u3ljPRyZPSYM+/62fEUeaXt4+',
+    'WEBSITE_URL':'https://recipe-website-server.herokuapp.com'
 }

@@ -46,7 +46,7 @@ module.exports.signup_post = async (req, res) => {
     const user = await User.create({ email, password, name });
     const token = createToken(user._id);
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
+    res.header('Access-Control-Allow-Origin', process.env.WEBSITE_URL)
     res.header('Access-Control-Allow-Credentials','true')
     res.status(201).json({ user: user.name });
   }
