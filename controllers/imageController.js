@@ -30,18 +30,18 @@ sharp(file).resize({height:300,width:300}).toFile(outputImage)
 }
 
 module.exports.submitNewImage_post = async (req, res) => {
-  try{const file = req.file;
-  // convert(file.originalname);
-  // console.log(file)
-  // convert(file);
-  // apply filter  
-  // resize 
+  try{
+    const file = req.file;
 
   const result = await uploadFile(file)
   await unlinkFile(file.path)
   // console.log(result)
+  //https://recipe-website-server.herokuapp.com
   const description = req.body.description
-  res.send({imagePath: `http://localhost:5000/getImage/${result.Key}`}).status(201);
+  //res.send({imagePath: `http://localhost:5000/getImage/${result.Key}`}).status(201);
+  res.send({imagePath: `  //https://recipe-website-server.herokuapp.com
+  /getImage/${result.Key}`}).status(201);
+
 }
   catch(err){
 console.log(err);
