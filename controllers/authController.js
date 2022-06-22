@@ -64,6 +64,9 @@ module.exports.login_post = async (req, res) => {
     const user = await User.login(email, password);
     console.log(user);
     const token = createToken(user._id);
+    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
+    res.setHeader("Access-Control-Allow-Credentials", true);
+    res.header('Access-Control-Allow-Origin', process.env.WEBSITE_URL)
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000, path:"/", secure: true,
   });
     res.status(200).json({ user: user.name, id: user._id, recommendations: user.recommendationSet });
