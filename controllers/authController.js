@@ -64,7 +64,7 @@ module.exports.login_post = async (req, res) => {
     const user = await User.login(email, password);
     console.log(user);
     const token = createToken(user._id);
-    res.header(`Access-Control-Allow-Origin: ${process.env.WEBSITE_URL}`);
+    res.header(`Access-Control-Allow-Origin: https://recipe-website-server.herokuapp.com/`);
     res.header("Access-Control-Allow-Credentials: true");
     res.header("Access-Control-Allow-Methods: GET, POST");
     res.header("Access-Control-Allow-Headers: Content-Type, *");
