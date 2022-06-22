@@ -10,7 +10,7 @@ const multer = require('multer')
 const upload = multer({ dest: 'images/' })
 const Recipes = require('./models/recipe');
 const { EnvironmentCredentials } = require('aws-sdk');
-
+app.enable('trust proxy');
 const corsOptions = {
   origin: true,
   credentials: true,
