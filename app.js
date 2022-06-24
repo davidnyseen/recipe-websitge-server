@@ -11,7 +11,7 @@ const upload = multer({ dest: 'images/' })
 const Recipes = require('./models/recipe');
 const { EnvironmentCredentials } = require('aws-sdk');
 const corsOptions = {
-  origin: true,
+  origin: '*',
   credentials: true,
   optionSuccessStatus: 200,
 };
@@ -21,11 +21,13 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.json());
 app.use(cookieParser());
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+app.use('*', (req, res, next) => {
+  res.header(`Access-Control-Allow-Origin: https://recipe-website-server.herokuapp.com/`);
+  res.header("Access-Control-Allow-Credentials: true");
+  res.header("Access-Control-Allow-Headers: Content-Type, *");
+  next()
+})
+a
 // view engine
 
 app.use(cors(corsOptions));
